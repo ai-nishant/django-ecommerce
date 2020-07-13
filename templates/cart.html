@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<body class="bg-white">
+  <!--::header part start::-->
+  
+  <!-- Header part end-->
+
+  <!-- breadcrumb start-->
+  <section class="breadcrumb breadcrumb_bg">
+      <div class="container">
+          <div class="row justify-content-center">
+              <div class="col-lg-12">
+                  <div class="breadcrumb_iner">
+                      <div class="breadcrumb_iner_item">
+                          <p>You came long way till here ! <h4> Congrats {{ items.customer.firstname }}</h4></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- breadcrumb start-->
+
+  <!--================Cart Area =================-->
+  <section class="cart_area section_padding">
+    <div class="container">
+      <div class="cart_inner">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for i in items  %}
+            
+              <tr>
+                <td>
+                  <div class="media">
+                    <div class="d-flex">
+                      <img src="{{i.product.image.url}}" alt="" />
+                    </div>
+                    <div class="media-body">
+                      <p>{{ i.product.name }}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <h5>{{ i.product.price | floatformat:2 }}</h5>
+                </td>
+                <td>
+                  <div class="product_count">
+                    <!-- <input type="text" value="1" min="0" max="10" title="Quantity:"
+                      class="input-text qty input-number" />
+                    <button
+                      class="increase input-number-increment items-count" type="button">
+                      <i class="ti-angle-up"></i>
+                    </button>
+                    <button
+                      class="reduced input-number-decrement items-count" type="button">
+                      <i class="ti-angle-down"></i>
+                    </button> -->
+                    <span data-product="{{i.product.id}}" data-action="remove" class="input-number-decrement update-cart"> <i class="ti-minus"></i></span>
+                    <input class="input-number" type="text" value="{{ i.quantity }}" min="0" max="10">
+                    <span data-product="{{i.product.id}}" data-action="add" class="input-number-increment update-cart"> <i class="ti-plus"></i></span>
+                  </div>
+                </td>
+                <td>
+                  <h5>{{ i.get_total | floatformat:2}}</h5>
+                </td>
+              </tr>
+              {% endfor %}
+              <tr class="bottom_button">
+                <td>
+                  <a class="btn_1" href="#">Update Cart</a>
+                </td>
+                <td></td>
+                <td></td>
+                <td>
+                  <div class="cupon_text float-right">
+                    <a class="btn_1" href="#">Close Coupon</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><h5>items</h5> </td>
+                
+                <td>Total:
+                  <h5>{{ order.get_cart_items }}</h5>
+                </td>
+                <td>
+                  <h5>Subtotal</h5>
+                </td>
+                <td>
+                  <h5>{{ order.get_cart_total | floatformat:2}}</h5>
+                </td>
+              </tr>
+              <tr class="shipping_area">
+                <td></td>
+                <td></td>
+                <td>
+                  <h5>Shipping</h5>
+                </td>
+                <td>
+                  <div class="shipping_box">
+                    <ul class="list">
+                      <li>
+                        Flat Rate: $5.00
+                        <input type="radio" aria-label="Radio button for following text input">
+                      </li>
+                      <li>
+                        Free Shipping
+                        <input type="radio" aria-label="Radio button for following text input">
+                      </li>
+                      <li>
+                        Flat Rate: $10.00
+                        <input type="radio" aria-label="Radio button for following text input">
+                      </li>
+                      <li class="active">
+                        Local Delivery: $2.00
+                        <input type="radio" aria-label="Radio button for following text input">
+                      </li>
+                    </ul>
+                    
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="checkout_btn_inner float-right">
+            <a class="btn_1" href="#">Continue Shopping</a>
+            <a class="btn_1 checkout_btn_1" href="checkout">Proceed to checkout</a>
+          </div>
+        </div>
+      </div>
+  </section>
+  <!--================End Cart Area =================-->
+{% endblock content %}
